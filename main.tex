@@ -593,13 +593,32 @@ Subsubsection text here.
 
 \section{Related Works}
 
-Most prominent traffic simulation software that have parallel computation implementations are microscopic traffic simulators. FastTrans \cite{thulasidasan2009accelerating}, Parallel Microscopic SimulationParamics \cite{cameron1996paramics}, and TRansportation ANalysis and SIMulation System (TRANSIMS) \cite{nagel2001parallel} microscopic simulators use parallel computation on distributed-memory multi-core computer systems by dividing the road network into multiple sub-networks that are distributed among processes running on the multiple computing cores; FastTrans and Paramic uses the message passing interface (MPI) library to share boundary information among processes, while TRANSIMS can supports both MPI and Parallel Virtual Machine (PVM) communication interface. The Advanced Interactive Microscopic Simulator for Urban and Non-Urban Networks (AIMSUN) \cite{ferrer1993aimsun2}, POLARIS microscopic simulator \cite{auld2016polaris}, Scalable Electro-Mobility Simulation (SEM-Sim) \cite{aydt2013multi}, and the IBM Mega Traffic Simulator (MEgaffic) \cite{osogami2012research} implement parallel computation through the multi-threading approach, which enables to run multiple threads in parallel to update simulated agents simultaneously. The Simulation of Urban Mobility (SUMO) microscopic simulator that exploits multi-threading parallel computation for vehicle routing but the rest of simulation is single-core \cite{behrisch2011sumo}. The Behavior, Energy, Autonomy and Mobility (BEAM) simulator \cite{aboutBeam} extends the Multi-Agent Transportation simulator (MATSIM) \cite{horni2016multi}, which is a microscopic traffic simulator. BEAM incorporates parallel computation via the Akka \cite{akka}library, which implements the Actor Model computation \cite{actorModel}. 
+\begin{table*}[htbp]
+\centering
+\begin{tabular} { | l | p{25mm} | p{80mm}| } 
+	\hline
+	\hline
+	\textbf{Software} & \textbf{Traffic Model} & \textbf{Parallel Method}\\ \hline
+	Paramics and FastTrans    & Microscopic Model & Parallel computation on distributed-memory computer with MPI for inter-core communication \\ \hline
+	TRANSIMS     & Microscopic Model & Parallel computation on distributed-memory computer with MPI and PVM for inter-core communication \\ \hline
+	AIMSUN, SEM-Sim and MEgaffic     & Microscopic Model & Multi-Threading \\ \hline
+	SUMO     & Microscopic Model & Multi-threading for routing \\ \hline
+	BEAM     & Microscopic Model & Akka library \\ \hline
+	Dynemo     & Mesoscopic Model & Network distribution through master-slave parallelization \\ \hline
+	Mobiliti     & Mesoscopic Model & Parallel discrete event with GASNet \\ \hline
+	\cite{xu2014mesoscopic,song2017supporting}and \cite{strippgen2009multi}     & Microscopic Model & Parallel computation on GPUs \\ \hline
+	\cite{chronopoulos1998real}     & Macroscopic Model & distribution of freeway sections on multiple processes of a nCubes2 distributed-memory parallel computer \\ \hline
+	\cite{johnston1999parallelization}     & Macroscopic Model & Network distribution of highway segments on multiple processes of a Cray T3W distributed-memory parallel computer \\ \hline
+\end{tabular}
+\caption{Softwares for Dynamic User Equilibrium}
+\label{tab:softwares}
+\end{table*}
 
-On the other hand, parallel computation has not been applied extensively in mesoscopic or macroscopic traffic simulation. For mesoscpic traffic simulation, N{\"o}kel and Schmidt present a parallel implementation for the Dynemo mesoscopic simulator that uses a master-slave parallelization. The master process initializes the simulation and distributes the network among multiple slave processes. The slave processes calculates the spatial motion of the vehicles on their sub-networks and shares boundary information through PVM communication interface. Mobiliti \cite{chan2018mobiliti} is another mesoscopic traffic simulator that model links as agents and vehicles as events. It uses the parallel discrete event paradigm and a GASNet communication layer to enable parallel computation on high performance computing resources or clusters.
+Most prominent traffic simulation software that have parallel computation implementations are microscopic traffic simulators. FastTrans \cite{thulasidasan2009accelerating}, Parallel Microscopic Simulation (Paramics) \cite{cameron1996paramics}, and TRansportation ANalysis and SIMulation System (TRANSIMS) \cite{nagel2001parallel} microscopic simulators use parallel computation on distributed-memory multi-core computer systems by dividing the road network into multiple sub-networks that are distributed among processes running on the multiple computing cores; FastTrans and Paramic uses the message passing interface (MPI) library to share boundary information among processes, while TRANSIMS can supports both MPI and Parallel Virtual Machine (PVM) communication interface. The Advanced Interactive Microscopic Simulator for Urban and Non-Urban Networks (AIMSUN) \cite{ferrer1993aimsun2}, Scalable Electro-Mobility Simulation (SEM-Sim) \cite{aydt2013multi}, and the IBM Mega Traffic Simulator (MEgaffic) \cite{osogami2012research} implement parallel computation through the multi-threading approach, which enables to run multiple threads in parallel to update simulated agents simultaneously. The Simulation of Urban Mobility (SUMO) microscopic simulator that exploits multi-threading parallel computation for vehicle routing but the rest of simulation is single-core \cite{behrisch2011sumo}. The Behavior, Energy, Autonomy and Mobility (BEAM) simulator \cite{aboutBeam} extends the Multi-Agent Transportation simulator (MATSIM) \cite{horni2016multi}, which is a microscopic traffic simulator. BEAM incorporates parallel computation via the Akka \cite{akka} library, which implements the Actor Model computation \cite{actorModel}. 
 
-In terms of macroscopic simulation, work \cite{chronopoulos1998real} present a parallel implementation of a continuum traffic flow model for freeway modeling on a nCubes2 hypercube distributed-memory parallel computer, where freeway is partitioned into equal segments and assigned to different processors. Each processor sends the calculated density, speed and volume on its segment to processors handling adjecent segments. Similarly, Johnston and Chronolopoulus \cite{johnston}describe a parallelization of lax-momentum traffic model for a highway that divided the highway into equal segments assigned to different processors. The simulation was run on Cray T3W distributed-memory computer system. Though \cite{chronopoulos1998real} and \cite{johnston} use parallel computation for macroscopic traffic simulation on distributed-memory computers, they are focused on freeway simulation. In addition, the performed simulation studies were on small networks (18 to 20 mile freeway) and were executed on older computer systems. On the other hand, the OTM macroscopic simulator models arterial and local roads in addition to highways, and has simulated networks of more than 60,000 nodes. We also ran OTM simulations on more modern parallel computer to take advantage of recent technology advances in parallel computers. 
+ For mesoscpic traffic simulation, N{\"o}kel and Schmidt present a parallel implementation for the Dynemo mesoscopic simulator that uses a master-slave parallelization. The master process initializes the simulation and distributes the network among multiple slave processes. The slave processes calculates the spatial motion of the vehicles on their sub-networks and shares boundary information through PVM communication interface. Mobiliti \cite{chan2018mobiliti} is another mesoscopic traffic simulator that model links as agents and vehicles as events. It uses the parallel discrete event paradigm and a GASNet communication layer to enable parallel computation on high performance computing resources or clusters.The POLARIS mesoscopic simulator \cite{auld2016polaris} exploits parallel computation via multi-threading. References  \cite{xu2014mesoscopic,song2017supporting,strippgen2009multi} present mesoscopic traffic simulation frameworks that take advantage of parallel computation on graphics processing units (GPUs). 
 
-
+On the other hand, parallel computation has not been applied extensively in macroscopic traffic simulation. Work \cite{chronopoulos1998real} present a parallel implementation of a continuum traffic flow model for freeway modeling on a nCubes2 hypercube distributed-memory parallel computer, where freeway is partitioned into equal segments and assigned to different processors. Each processor sends the calculated density, speed and volume on its segment to processors handling adjacent segments. Similarly, Johnston and Chronolopoulus \cite{johnston1999parallelization} describe a parallelization of lax-momentum traffic model for a highway that divided the highway into equal segments assigned to different processors. The simulation was run on Cray T3W distributed-memory computer system. Though \cite{chronopoulos1998real} and \cite{johnston1999parallelization} use parallel computation for macroscopic traffic simulation on distributed-memory computers, they are focused on freeway simulation. In addition, the performed simulation studies were on small networks (18 to 20 mile freeway) and were executed on older computer systems. On the other hand, the OTM macroscopic simulator models arterial and local roads in addition to highways, and has simulated networks of more than 60,000 nodes. We also ran OTM simulations on more modern parallel computer to take advantage of recent technology advances in parallel computers. 
 
 \section{Conclusion}
 The conclusion goes here.
@@ -670,13 +689,8 @@ The authors would like to thank...
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
+\bibliographystyle{IEEEtran}
+\bibliography{citation.bib}
 
 % biography section
 % 
