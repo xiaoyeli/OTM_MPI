@@ -1,0 +1,7 @@
+
+Grey: speed less than or equal to 40 mph\
+Blue: speed 60 mph or greater\
+
+Network Statistics:
+    88408 nodes
+	121946 edges
