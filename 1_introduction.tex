@@ -1,4 +1,8 @@
-\IEEEPARstart{S}{imulation} speed is crucial when traffic simulation is used in real-time traffic management or traffic forecasting applications \cite{lee2002framework}.Traffic simulation developers have adopted parallel computation techniques to speed up traffic simulation of large networks. On a multiprocessor shared-memory computer, parallel simulation take advantage of the computer's many processors to execute in parallel; in this case, the simulation speed-up is limited by the number of processors on the one computer. A multiprocessor distributed-memory computer system, parallel simulation can use processors on multiple computers.
+% Simulation speed is crucial when traffic simulation is used in real-time traffic management or traffic forecasting applications \cite{lee2002framework}.
+\IEEEPARstart{R}{ecent} years have seen significant technological changes in transportation with the advent of shared-mobility like Uber and Lift, electric vehicles, and autonomous. There is a need for government agencies and industry to understand the impact of wide-spread adoption of these new technologies on the large-scale transportation system. This in turn requires tools to model the transportation system at the city scale, requiring large computing and memory resources. Parallel computation and modern supercomputers provide the power and memory to handle such large-scale traffic simulation. They also enable running thousands of parallel simulations that can answer future what-if scenarios.
+Traffic simulation developers have adopted parallel computation techniques for traffic simulation of large networks. On a multiprocessor shared-memory computer, parallel simulation takes advantage of the computer's many processors to execute tasks in parallel. In this case, the simulation speed-up is limited by the number of processors on the one computer. On a multiprocessor distributed-memory computer system, parallel simulation can use processors on multiple computers while communicating over a message passing system. This paper describes such an approach for a fluid-based traffic simulation models. We begin by reviewing previous efforts, most of which have focused on vehicle-based (microscopic and mesoscopic) models. 
+
+% We should have a section that show when to use macroscopic simulation and why it is needed at large-scale too. 
 
 \subsection{Related Works}
 
@@ -42,12 +46,4 @@ On the other hand, parallel computation has not been applied extensively in macr
 %\xslnote{I know about T3D, T3E, but not T3W}
 distributed-memory computer system. Though \cite{chronopoulos1998real} and \cite{johnston1999parallelization} use parallel computation for macroscopic traffic simulation on distributed-memory computers, they are focused on freeway simulation. In addition, the performed simulation studies were on small networks (18 to 20 mile freeway) and were executed on older computer systems.
 
-In contrast, our work described in this paper -- the Open Traffic Model (OTM)
-macroscopic simulator -- models arterial and local roads in addition to highways,
-and has simulated networks of more than 60,000 nodes and 100,000 links.
-It uses domain decomposition to distribute the network among computing cores. We ran OTM simulations on a Cray XC40 Cori supercomputer
-at NERSC~\cite{Cori}. Each node has two sockets, each socket is
-populated with a 16-core Intel\textcopyright~Xeon\texttrademark~Processor
-E5-2698 v3 (``Haswell'') at 2.3 GHz and 128 GB of RAM memory.
-This is a very modern parallel computer, taking advantage of recent
-technology advances in parallel computers. 
+The work we present here is based on the Open Traffic Models simultor. OTM is a full-featured traffic simulator that has in the past been used in single-process environments. OTM is a \textit{hybrid} simulator, in the sense that it incorporates multiple (macroscopic, mesoscopic, and microscopic) models which can be combined arbitrarily on a single network. It also supports multiple road geometries (turn pockets, managed lanes on freeways, etc.), multiple vehicle types, and a variety of traffic control systems (traffic signals, variable speed limits, onboard information systems, etc.). Here we focus on the parallelization of the macroscopic model only. This is both because there are many high quality distributed implementations of vehicle-based models, and because it avoid some of the complexities of asynchronous updates that occur in vehicle-based model.
