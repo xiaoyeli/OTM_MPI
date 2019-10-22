@@ -25,6 +25,13 @@ In Figure~\ref{fig:cells}, vehicles that enter link 0 must decide whether they w
 
 \vspace{1em} \noindent \textbf{4) State update.} Once all packets have been received and tagged with their next downstream link, then the state of the cells can be updated using the conservation of vehicles. This calculation follows the standard cell transmission model formulas for internal cells, and involves the inter-link packets for the first and last cells in a lane group. 
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\columnwidth]{figs/Methodology.png}
+    \caption{Parallelization Strategy: Network Partitioning}
+    \label{fig:Parallel_Strategy}
+\end{figure}
+
 \subsection{Network partitioning}
 
 The first step in the distribution of computation over $n$ processes is to split the network into $n$ overlapping subnetworks. To obtain these, the set of nodes is first partitioned into $n$ non-overlapping sets. Use $\mathcal{N}_i$, $i\in[1\hdots n]$, to denote the $i$th subset of nodes. The $i$th subnetwork contains all of the nodes in $\mathcal{N}_i$, as well as all of the links with either start or end node in $\mathcal{N}_i$. 

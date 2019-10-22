@@ -1,19 +1,15 @@
-Network Statistics:
-    88408 nodes
-	121946 edges
+We ran OTM simulations on a Cray XC40 Cori supercomputer at NERSC~\cite{Cori}. Each node has two sockets, each socket is
+populated with a 16-core Intel\textcopyright~Xeon\texttrademark~Processor E5-2698 v3 (``Haswell'') at 2.3 GHz and 128 GB of RAM memory. This is a very modern parallel computer, taking advantage of recent technology advances in parallel computers.
 
-
-
-Figure\ref{fig:chicago}
-
-
+\subsection{Experiment on Large-scale Synthetic Network}
 \begin{figure}[h!]
     \centering
-    \includegraphics[height=3in]{figs/Chicago_Net_Black_White.png}
-    \caption{CAPTION.}
-    \label{fig:chicago}
+    \includegraphics[height=3in]{figs/Grid-Network.png}
+    \caption{Large-scale Synthetic Network with 62500 nodes and 170,000 links}
+    \label{fig:Synthetic_Network}
 \end{figure}
 
+We conducted experiments on a large, grid-like, synthetic network, shown in fig. \ref{fig:Synthetic_Network}, to demonstrate the scalability of the parallel OTM in large networks. The network was composed of 62,500 nodes and 170,000 links. The traffic demand was from 12,500 origin destination pairs and the simulation was run for 1000 seconds. Fig. \ref{fig:mpirun} show the bread-down of the time used for loading and configuring the network into OTM format (load), running the simulation (run), and communication between the network partitions, as the number of processes increased from 1 to 1024. As the number of processes used for simulation increased, the size of the network partition per process also decreased. Accordingly, the time to load, simulated and communicate also decreased as each process had less computation/communication to do.
 
 \begin{figure}[h!]
     \centering
@@ -21,13 +17,40 @@ Figure\ref{fig:chicago}
     \caption{CAPTION.}
     \label{fig:mpirun}
 \end{figure}
+Fig. \ref{fig:scaling} demonstrate the scaling of parallel OTM compared to the ideal scaling simulation rate. For each simulation experiment, the simulation rate $1/(simulation \:time)$, which corresponds to the number of simulations that can be completed within 1 seconds (simulations/s). The ideal rate is calculated as $(number\: of\: processes)*(serial\: simulation\: rate)$, and assumes that simulation rate increases proportionally with the number of processes. In practice, parallel simulation does not attain the ideal scaling rate as the $(communication\:time)/(simulation\:time)$ ratio grows with the number of processes. In fact, we observed that for the experiment with 1024 processes, each process spend half of its computation time in communicating with other processes. However, we still observed that for the simulation time, the parallel OTM had a speed up of 475 times with 1024 processes compared to the serial OTM. This corresponded to a time reduction from 8,245 seconds to 17 seconds.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\columnwidth]{figs/Scaling.png}
+    \caption{Parallel OTM Scaling Rate compared to Ideal Scaling Rate}
+    \label{fig:scaling}
+\end{figure}
+
+\subsection{Experiment on Miami Network}
+We also conducted simulation experiments on a network for a section of Miami, Florida. The goal was to demonstrate how the parallel OTM scale when simulating traffic networks with realistic topology. The Miami network with $x$ nodes and $y$ links, and was extracted from OpenStreetMap\cite{haklay2008openstreetmap}. We then converted the network into OTM network format. This scenario had $z$ origin-destination pairs, and was simulated for $q$ seconds. 
+
+We also conducted experiments to verify that the parallel OTM maintained the same traffic states as the serial OTM. We did this by comparing the vehicle density in every link and every 100 seconds between the serial simulation and parallel simulations. 
 
 \vspace{1in}
 
 
-We ran OTM simulations on a Cray XC40 Cori supercomputer at NERSC~\cite{Cori}. Each node has two sockets, each socket is
-populated with a 16-core Intel\textcopyright~Xeon\texttrademark~Processor E5-2698 v3 (``Haswell'') at 2.3 GHz and 128 GB of RAM memory. This is a very modern parallel computer, taking advantage of recent technology advances in parallel computers. 
+
+% Network Statistics:
+%     88408 nodes
+% 	121946 edges
+
+
+
+% Figure\ref{fig:chicago}
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[height=3in]{figs/Chicago_Net_Black_White.png}
+%     \caption{CAPTION.}
+%     \label{fig:chicago}
+% \end{figure}
+ 
 
 
 
