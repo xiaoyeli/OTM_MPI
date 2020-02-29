@@ -16,7 +16,10 @@ The state of each cell is the number of vehicles in the cell for each vehicle ty
 
 The state update equation for each cell is executed in the following steps:
 
-\vspace{1em} \noindent \textbf{1) Demand and supply calculations.} The total demand and supply for every cell are computed using the standard formulas of the cell-transmission model for a triangular fundamental diagram. For the downstream-most cell in each lane group, the demands are referenced to the road connections that connect to the respective downstream links\footnote{OTM imposes the restriction that there can be at most one road connection joining a given upstream lane group to a downstream link}. Prior to computing the longitudinal demand, the model executes all lateral movements (lane changes). [XXX] provides the details. 
+\vspace{1em} \noindent \textbf{1) Demand and supply calculations.} The total demand and supply for every cell are computed using the standard formulas of the cell-transmission model for a triangular fundamental diagram.
+%For the downstream-most cell in each lane group, the demands are referenced
+For the last cell in each lane group, the demands are referenced
+to the road connections that connect to the respective downstream links\footnote{OTM imposes the restriction that there can be at most one road connection joining a given upstream lane group to a downstream link}. Prior to computing the longitudinal demand, the model executes all lateral movements (lane changes). [XXX] provides the details. 
 
 \vspace{1em}\noindent \textbf{2) Inter-link flow calculation.} The flows between links travel along road connections. The \textit{node model} resolves these flows from upstream demands and downstream supplies. The details of the node model can be found in XXX. Here it will suffice to state that the output of the node model is a set of \textit{state packets} that are delivered along road connections to downstream links. The node model ensures that the downstream links have sufficient available space to accommodate the state packets.  
 

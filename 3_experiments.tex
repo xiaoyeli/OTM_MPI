@@ -1,4 +1,4 @@
-We ran OTM simulations on a Cray XC40 Cori supercomputer at NERSC~\cite{Cori}. Each node has two sockets, each socket is
+We ran OTM-MPI simulations on a Cray XC40 Cori supercomputer at NERSC~\cite{Cori}. Each node has two sockets, each socket is
 populated with a 16-core Intel\textcopyright~Xeon\texttrademark~Processor E5-2698 v3 (``Haswell'') at 2.3 GHz and 128 GB of RAM memory. This is a very modern parallel computer, taking advantage of recent technology advances in parallel computers.
 
 \subsection{Experiment on Large-scale Synthetic Network}
@@ -9,27 +9,43 @@ populated with a 16-core Intel\textcopyright~Xeon\texttrademark~Processor E5-269
     \label{fig:Synthetic_Network}
 \end{figure}
 
-We conducted experiments on a large, grid-like, synthetic network, shown in fig. \ref{fig:Synthetic_Network}, to demonstrate the scalability of the parallel OTM in large networks. The network was composed of 62,500 nodes and 170,000 links. The traffic demand was from 12,500 origin destination pairs and the simulation was run for 1000 seconds. Fig. \ref{fig:mpirun} show the bread-down of the time used for loading and configuring the network into OTM format (load), running the simulation (run), and communication between the network partitions, as the number of processes increased from 1 to 1024. As the number of processes used for simulation increased, the size of the network partition per process also decreased. Accordingly, the time to load, simulated and communicate also decreased as each process had less computation/communication to do.
+We conducted experiments on a large, grid-like, synthetic network, with a topoloty shown in fig. \ref{fig:Synthetic_Network}, to demonstrate the scalability of the parallel OTM in large networks. The network was composed of 62,500 nodes and 170,000 links. The traffic demand was from 12,500 origin destination pairs and the simulation was run for 1000 seconds. Fig. \ref{fig:mpirun} show the bread-down of the time used for loading and configuring the network into OTM format (load), running the simulation (run), and communication between the network partitions, as the number of processes increased from 1 to 1024. As the number of processes used for simulation increased, the size of the network partition per process also decreased. Accordingly, the time to load, simulated and communicate also decreased as each process had less computation/communication to do.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\columnwidth]{figs/mpirun.png}
-    \caption{CAPTION.}
+    \caption{OTM Time Breakdown for Simulating 62,500 Node Grid Network}
     \label{fig:mpirun}
 \end{figure}
-Fig. \ref{fig:scaling} demonstrate the scaling of parallel OTM compared to the ideal scaling simulation rate. For each simulation experiment, the simulation rate $1/(simulation \:time)$, which corresponds to the number of simulations that can be completed within 1 seconds (simulations/s). The ideal rate is calculated as $(number\: of\: processes)*(serial\: simulation\: rate)$, and assumes that simulation rate increases proportionally with the number of processes. In practice, parallel simulation does not attain the ideal scaling rate as the $(communication\:time)/(simulation\:time)$ ratio grows with the number of processes. In fact, we observed that for the experiment with 1024 processes, each process spend half of its computation time in communicating with other processes. However, we still observed that for the simulation time, the parallel OTM had a speed up of 475 times with 1024 processes compared to the serial OTM. This corresponded to a time reduction from 8,245 seconds to 17 seconds.
+Fig. \ref{fig:scaling} demonstrate the scaling of parallel OTM compared to the ideal scaling simulation rate. For each simulation experiment, the simulation rate $1/(simulation \:time)$, which corresponds to the number of simulations that can be completed within 1 seconds (simulations/s). The ideal rate is calculated as $(number\: of\: processes)*(serial\: simulation\: rate)$, and assumes that simulation rate increases proportionally with the number of processes. In practice, parallel simulation does not attain the ideal scaling rate as the $(communication\:time)/(simulation\:time)$ ratio grows with the number of processes. In fact, we observed that for the experiment with 1024 processes, each process spend half of its computation time in communicating with other processes. However, we still observed that for the simulation time, the parallel OTM had a speed up of 475 times with 1024 processes compared to the serial OTM. This corresponded to a time reduction from 8,245 seconds to 17 seconds and speed up of 485 times compared to the serial simulation.
 
-\begin{figure}[h!]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\columnwidth]{figs/Scaling.png}
-    \caption{Parallel OTM Scaling Rate compared to Ideal Scaling Rate}
+    \caption{OTM Scaling Rate compared to Ideal Scaling Rate when Simulating Grid Network}
     \label{fig:scaling}
 \end{figure}
 
-\subsection{Experiment on Miami Network}
-We also conducted simulation experiments on a network for a section of Miami, Florida. The goal was to demonstrate how the parallel OTM scale when simulating traffic networks with realistic topology. The Miami network with $x$ nodes and $y$ links, and was extracted from OpenStreetMap\cite{haklay2008openstreetmap}. We then converted the network into OTM network format. This scenario had $z$ origin-destination pairs, and was simulated for $q$ seconds. 
+\subsection{Experiment on Chattanooga Tennessee Network}
 
-We also conducted experiments to verify that the parallel OTM maintained the same traffic states as the serial OTM. We did this by comparing the vehicle density in every link and every 100 seconds between the serial simulation and parallel simulations. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\columnwidth]{figs/Chattanooga_Rate.png}
+    \caption{OTM Scaling when simulating the Chattanooga Region}
+    \label{fig:ChattanoogaRate}
+\end{figure}
+
+We also conducted simulation experiments on a network Chattanooga, Tennessee, region. The goal was to demonstrate how the parallel OTM scale when simulating a large traffic networks with realistic topology. The Chattanooga network had 32260 nodes and 38440 links, and was extracted from OpenStreetMap\cite{haklay2008openstreetmap}. We then converted the network into OTM network format. This scenario had 248 demand sources with an average of 2000 vehicle/hour demand, and was simulated for 10,000 time-steps. 
+Figure \ref{fig:Chattanooga_Sim} shows the distribution of time when simulating the Chattanooga region. As previously, the computing amount per core decreases as the number of cores increases, and this leads to a decrease in simulation, communication and network loading time. For this realistic network, parallel computing also reduced the computing time significantly from 6026 seconds with one computer core to 30 seconds with 256 cores, which corresponds to a speed up of 197 times compared to the serial simulation. Figure \ref{fig:ChattanoogaRate} shows the OTM scaling on the Chattanooga network, which is similar to the scaling on the grid synthetic network. 
+We also conducted experiments to verify that the parallel OTM maintained the same traffic states as the serial OTM. We did this by comparing the vehicle density in every link and every 100 time-steps between the serial simulation and parallel simulations. 
+
+% Having Issue adding this Graph
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=\columnwidth, height=2in]{figs/Chattanooga_Runtime.png}
+%     \caption{Distribution of Simulation Time for the Chattanooga Region Network}
+%     \label{fig:Chattanooga_Sim}
+% \end{figure}
 
 \vspace{1in}
 
