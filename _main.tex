@@ -9,33 +9,36 @@
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{url}
+\usepackage{gensymb}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \hyphenation{op-tical net-works semi-conduc-tor}
 \newcommand{\xslnote}[1]{{\bf\color{red}[ #1 -- SHERRY ]}}
+\newcommand{\red}[1]{{\bf\color{red}#1}}
 
 
 \begin{document}
 
-\title{Distributed simulation of macroscopic \\ traffic models for large networks}
+\title{Distributed macroscopic traffic \\ simulation with Open Traffic Models}
 
 \author{\IEEEauthorblockN{Gabriel Gomes}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address}
+\IEEEauthorblockA{\textit{Institute of Transportation Studies} \\
+\textit{University of California}\\
+Berkeley, CA, USA \\
+gomes@berkeley.edu}
 \and
 \IEEEauthorblockN{Juliette Ugirumurera}
 \IEEEauthorblockA{\textit{Computational Science Center} \\
 \textit{National Renewable Energy Laboratory}\\
-Denver, USA \\
+Denver, CO, USA \\
 jugirumu@nrel.gov}
 \and
 \IEEEauthorblockN{Xiaoye S. Li}
 \IEEEauthorblockA{\textit{Computational Research Division} \\
 \textit{Lawrence Berkeley National Laboratory}\\
-Berkeley, USA \\
+Berkeley, CA, USA \\
 xsli@lbl.gov}
 }
 
@@ -46,7 +49,7 @@ xsli@lbl.gov}
 \end{abstract}
 
 \begin{IEEEkeywords}
-Traffic Simulation, Parallel Simulation, Macroscopic Traffic Simulation, Parallel Computing
+Traffic simulation, Parallel simulation, Macroscopic traffic simulation, Parallel computing
 \end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
@@ -58,6 +61,7 @@ Traffic Simulation, Parallel Simulation, Macroscopic Traffic Simulation, Paralle
 \input{2_methodology}
 
 \section{Experiments}
+\label{sec:experiments}
 \input{3_experiments}
 
 \section{Conclusion}
